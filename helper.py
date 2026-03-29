@@ -3,7 +3,7 @@ import pandas as pd
 from collections import Counter
 from urlextract import URLExtract
 import matplotlib.pyplot as plt
-from wordcloud import WordCloud
+
 extractor=URLExtract()
 def fetch_stats(selected_user,df):
     if selected_user !='Overall':
@@ -33,20 +33,25 @@ def create_wordcloud(selected_user, df):
     with open('stop_hinglish.txt', 'r', encoding='utf-8') as f:
         stop_words = set(f.read().split())
 
-    def remove_stop_words(message):
-        y = []
+    words = []
+
+    for message in temp_df['message']:
         for word in message.lower().split():
             if word not in stop_words:
-                y.append(word)
-        return " ".join(y)
+                words.append(word)
 
-    temp_df['message'] = temp_df['message'].apply(remove_stop_words)
+    # Count most common words
+    common_words = Counter(words).most_common(20)
 
-    wc = WordCloud(width=500, height=500, min_font_size=10, background_color='white')
-    df_wc = wc.generate(temp_df['message'].str.cat(sep=" "))
-    
-    return df_wc
+    # Convert to DataFrame
+    common_df = pd.DataFrame(common_words, columns=['word', 'count'])
 
+    # Create bar plot (replacement for wordcloud)
+    fig, ax = plt.subplots()
+    ax.barh(common_df['word'], common_df['count'])
+    ax.invert_yaxis()
+
+    return fig
 def most_common_words(selected_user,df):
     with open('stop_hinglish.txt', 'r', encoding='utf-8') as f:
         stop_words = set(f.read().split())
