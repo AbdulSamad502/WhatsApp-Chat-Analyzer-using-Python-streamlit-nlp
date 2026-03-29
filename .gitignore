@@ -1,0 +1,39 @@
+# 🔹 Virtual Environment
+venv/
+.env/
+
+# 🔹 Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 🔹 Streamlit
+.streamlit/
+
+# 🔹 Logs
+*.log
+
+# 🔹 OS files
+.DS_Store
+Thumbs.db
+
+# 🔹 Jupyter Notebook
+.ipynb_checkpoints/
+
+# 🔹 VS Code / IDE
+.vscode/
+.idea/
+
+# 🔹 Environment variables
+.env
+
+# 🔹 Large / unwanted files
+*.pkl
+*.csv
+
+# 🔹 Temporary files
+*.tmp
+*.temp
+WhatsApp Chat with Syntax ERROR ⚠️⚠️.txt
+*.bak
