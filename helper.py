@@ -24,28 +24,32 @@ def fetch_busy_users(df):
     x=df['user'].value_counts().head()
     df=round((df['user'].value_counts()/df.shape[0])*100,2).reset_index().rename(columns={'index':'name','user':'percent'})
     return x,df
+def create_wordcloud(selected_user, df):
+    if selected_user != 'Overall':
+        df = df[df['user'] == selected_user]
 
-def create_wordcloud(selected_user,df):
-    if selected_user !='Overall':
-        df=df[df['user']==selected_user]
-    temp_df=df[df['message']!='<Media omitted>']
+    temp_df = df[df['message'] != '<Media omitted>']
+
+    with open('stop_hinglish.txt', 'r', encoding='utf-8') as f:
+        stop_words = set(f.read().split())
+
     def remove_stop_words(message):
-        f=open('stop_hinglish.txt','r')
-        stop_words=f.read()
-        y=[]
+        y = []
         for word in message.lower().split():
             if word not in stop_words:
                 y.append(word)
         return " ".join(y)
-    temp_df['message']=temp_df['message'].apply(remove_stop_words)
 
-    wc=WordCloud(width=500,height=500,min_font_size=10,background_color='white')
-    df_wc=wc.generate(temp_df['message'].str.cat(sep=" "))
+    temp_df['message'] = temp_df['message'].apply(remove_stop_words)
+
+    wc = WordCloud(width=500, height=500, min_font_size=10, background_color='white')
+    df_wc = wc.generate(temp_df['message'].str.cat(sep=" "))
+    
     return df_wc
 
 def most_common_words(selected_user,df):
-    f=open('stop_hinglish.txt','r')
-    stop_words=f.read()
+    with open('stop_hinglish.txt', 'r', encoding='utf-8') as f:
+        stop_words = set(f.read().split())
     if selected_user !='Overall':
         df=df[df['user']==selected_user]
     temp_df=df[df['message']!='<Media omitted>']

@@ -1,9 +1,7 @@
 import emoji
-import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 import preprocess,helper
-import matplotlib.pyplot as plt
 st.sidebar.title("WhatsApp Chat Analysis")
 
 uploaded_file = st.sidebar.file_uploader("Upload WhatsApp Chat File", type=["txt"])
@@ -98,7 +96,8 @@ if uploaded_file is not None:
         st.title("WordCloud")
         df_wc=helper.create_wordcloud(selected_user,df)
         fig, ax = plt.subplots()
-        ax.imshow(df_wc)
+        ax.imshow(df_wc, interpolation='bilinear')
+        ax.axis('off')
         st.pyplot(fig)
 
 ## Most Common Words
