@@ -29,7 +29,6 @@ Thumbs.db
 .env
 
 # 🔹 Large / unwanted files
-*.pkl
 *.csv
 
 # 🔹 Temporary files
